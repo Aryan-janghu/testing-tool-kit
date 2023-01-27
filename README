@@ -1,0 +1,166 @@
+=>This is a program that helps a user to connect to a particular device and perform various test cases on the device . User can keep a track of logs every time he perform any test case. It can be very help for the testing of a new device . Using this program a user can compare the output from the device and the output which he expects from the device .
+
+=> I used python language and its various libraries for my program as pyhton is a dynamic language and has various libraries which makes the work very easy for the coder.I used paramiko, os , re and time libraries of pyhton for my project. 
+
+***************************************************************************
+
+PREREQUISITES
+==========================
+	- Install python and its library paramiko.
+	- Install os , re , time pakages of python.
+	- Follow the directory structure given below to store your test case files and logs of your test case.
+	- keep the IP , Username , Password ready of the device because you will need it to connect to the device.
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+STEPS TO INSTALL PYTHON AND IT'S PACKAGES(On ubuntu):
+=========================================
+1. First check if your system has python or not by running command.
+
+   $ python --version
+
+2. If python is not installed, then install python.
+
+   $ sudo apt install python3
+   $ python --version          # To confirm python has been installed.
+
+3. Install pip.
+
+   $ sudo apt install python3-pip
+   $ pip --version
+
+4. Install paramiko.
+
+   $ pip install paramiko
+   
+   Note: To install any other python package or python library simply run command 'pip install pachage_name'.  
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+ DIRECTORY STRUCTURE
+===========================================
+    
+device  //directory 
+├── config            /file
+├── cpu               //directory
+│   ├── log          /file   
+│   ├── ls.exp       /file
+│   ├── ls.txt       /file
+│   ├── ps.exp       /file
+│   ├── ps.txt       /file
+│   ├── setup        /file
+│   ├── uname-a.exp       /file
+│   └── uname-a.txt       /file
+├── log              //directory
+├── network          //directory
+│   ├── log    //directory
+│   ├── ls.exp      /file
+│   ├── ls.txt      /file
+│   ├── ps.exp      /file
+│   ├── ps.txt      /file
+│   └── setup       /file
+├── setup     //directory
+├── testing.py      /python file
+└── work      //directory
+    ├── log   //directory
+    └── setup //directory
+
+
+____________________DESCRIPTION OF DIRECTORY STRUCTUR_____________________
+
+device [directory]  =this is the directory that conatains sub directories which store the test case files and there expected output.
+		    =this is the directory that will have all the information regarding the particular device and test cases run on that    device.
+
+test_case.txt [file]  == this file will have all the information related to that particular test case.
+                      ==AT THE END PROVIDE THE COMMAND TO BE RUN. EXAMPLE- COMMAND:command_run.
+                      ==DON'T USE ':' THIS IN THE FILE ANYWHERE ELSE EXCEPT WHILE GIVING COMMAND.
+                      ==you can have any number of this file in each directory.
+                      ==you can name these files according to your convenience BUT END IT WITH .txt EXTENSION.
+
+test_case.exp [file]  ==this file will have the expected output of the particular test_case.
+                      ==every .txt file should have it's .exp file.
+                      ==this file can have the exact output or any regular expression.
+                      ==this should also be present in the same directory as its .txt file 
+                      ==this file should have the same name as its .txt file but extension should be .exp .
+
+cpu , network , work [directory]  ==these directory will help kep similar test cases in a single directory.
+                 		  ==you can have any number of such directory. 
+                 		  ==each directory will have .txt file , .exp file , setup file , log(directory)
+                		  ==you can chose any name for these directory.
+                                  
+log [directory]  ==every directory will have its own log directory.
+                 ==it will store the logs of output every time you run any test case.
+                 ==log directory present in the device directory will store the ouput of test cases from each directory.
+                 ==log directory present inside the dir directory will store the output of the test case present in that directory only.
+
+setup  [file]    ==setup file present in the device directory will conatin name of directory from which you want to run the test case.
+                 ==setup file present in the dir directory will contain name of files you want to run from that particular         
+                    directory.
+                 ==every directory will have its own setup file.                 
+                 
+testing.py [python file]  ==this is the file that you will run on the terminal whick will execute your test case.
+			  ==this file must be present in the main directory i.e device directory.
+
+
+xxxxxxxxxxxxxxx  WORKING OF MY PROGRAM  xxxxxxxxxxxxxxx
+
+* when you run my program it will first of all connect you to the device using ip , username and passwrod.
+* then it will read the setup file present in the device directory .
+* then it will open the directories whose names are present in the setup file one by one.
+* inside those directories there will be another setup file which will have the name of the files which have the test case 
+* the  it will open those text files and take out command from those text files and run those command on the device .
+* then it will comapre the output produced by the device with the output expected by you and if it matches the test case will pass else fail.
+* the expected output will be present along side by the test case file .
+* then it will store the output of every test case in the log directory which is present in the same directory where the test case file is present.
+* all the combine output will be stored in the log directory which is present in the device directory.
+* in the log directory present in the device directory the result file will also be stored that will show the total number of test cases run and the number of test case passed and number of test case failed.
+
+
+xxxxxxxxxxxxxxxxxxxxxxx  INPUTS YOU WILL BE PROVIDING  xxxxxxxxxxxxxxxxxxxx
+  
+   * Before my python script you need to first change your working directory to device by using command 'cd' on your terminal and once you are in the device directory then just run the testing.py (python file).
+   * when you will run my program it will ask you to enter 3 things which will be required to connect to the device on which you want  to   perfrom your test case:
+     1. ip address of the device to which you want to connect.
+     2. username of the device .
+     3. password of thee device .
+   
+   
+xxxxxxxxxxxxxxxxx  RULES FOR NAMING OF DIRECTORIES AND FILES  xxxxxxxxxxxxxxxxxxxxxxxxx
+  
+  * the name of the python file should be testing.py nothing else.
+  * your main directory sholud be named as 'device'.
+  * in the device directory you will have a setup file which will have the names of the directories you want to run.
+  * you can name directories which will have your test case files in the device directory as you wish (eg: let them be 'dir1','dir2').
+  * there should be a 'log' directory in the device directory to store the logs and result.
+  * in the device directory you will have the testing.py file that will have the code that you will run to run your test case on the device.
+  * in the device directory you should not have anything other than above mentioned files and directories.
+  * in the 'dir' directory you will have the '.txt' file that will have the command and other info about the test case.
+  * in the 'dir' directory you will have a 'command_name.exp' file that will have the expected output for the command:command_name.
+  * in the 'dir' directory you will have a 'log' directory that will store the ouput for the test cases of that particular directory.
+  * in the 'dir' directory you will have a setup file which have the name of '.txt' files that you want to run.
+  * IN EVERY SETUP FILE YOU SHOULD WRITE THE COMPLETE NAME OF FILE OR DIRECTORY INCLUDING THE EXTENSION LIKE '.txt' . 
+  
+  
+xxxxxxxxxxxxxxxxxx  POINTS TO KEEP IN MIND FOR WHILE WRITING CONTENT IN A .txt FILE  xxxxxxxxxxxxxxxxxxxxxxx
+  
+  *'COMMAND:command_name' should always be written at the end of the file.
+  * DO NOT USE ':' ANYWHERE ELSE OTHER THAN JUST BEFORE THE COMMAND NAME.
+  * Do nt write anything else writing the command in the file.
+     
+
+xxxxxxxxxxxxxxxxxxxx  POINTS RELATED TO 'command_name.exp' FILE  xxxxxxxxxxxxxxxxxxxxxx
+  
+  * this file should have only the expected output nothing else.
+  * the content of the file should be in the same way as you expect the output.
+  * this file can even have a regular expression .
+  * the name of this file should same as '.txt' file , only the extension will be different i.e '.exp' .
+  
+  
+  
+  
+  
+  
+  
+   
+   
+   
